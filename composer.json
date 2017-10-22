@@ -1,6 +1,6 @@
 {
     "name": "mediumart/echo.io-php",
-    "description": "php bindings for laravel-echo and socket.io server",
+    "description": "php bindings for laravel and echo.io server",
     "keywords": ["laravel", "socket.io"],
     "license": "MIT",
     "authors": [
