@@ -1,0 +1,7 @@
+.idea/
+vendor/
+src/Console/
+/*.php
+phpunit.xml
+clover.xml
+coveralls-upload.json

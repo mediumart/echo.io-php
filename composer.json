@@ -1,0 +1,29 @@
+{
+    "name": "mediumart/echo.io-php",
+    "description": "php bindings for laravel-echo and socket.io server",
+    "keywords": ["laravel", "socket.io"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Isaac Esso",
+            "email": "daprod2009@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/broadcasting": "5.3.*|5.4.*|5.5.*",
+        "firebase/php-jwt": "~5.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mediumart\\Echoio\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mediumart\\Echoio\\Tests\\": "tests/"
+        }
+    }
+}
