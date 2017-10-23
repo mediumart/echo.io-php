@@ -18,7 +18,7 @@ class EchoioServiceProvider extends ServiceProvider
         $this->app->make(BroadcastingFactory::class)->extend('redis', function ($app, $config) {
             return new RedisBroadcaster(
                 $this->app->make('redis'), [
-                    'key' => $this->app['config']['services.broadcasting.key'],
+                    'key' => $this->app['config']['services.broadcast.key'],
                     'connection' =>  $config['connection'] ?  $config['connection'] : null
                 ]
             );
