@@ -32,11 +32,11 @@ class EchoioServiceProvider extends ServiceProvider
                                                     'middleware' : 'aliasMiddleware';
 
         $router->{$aliasMiddlewareMethod}(
-            'io', EncodeBroadcastingAuthValidResponse::class
+            'echo.io', EncodeBroadcastingAuthValidResponse::class
         );
 
         $router->getRoutes()
                 ->getByAction(BroadcastController::class.'@authenticate')
-                ->middleware('io');
+                ->middleware('echo.io');
     }
 }

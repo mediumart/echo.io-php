@@ -34,11 +34,13 @@ class EncodeBroadcastingAuthValidResponse
     public function handle($request, Closure $next)
     {   
         return tap($next($request), function($response) use ($request) {
-            $content = $this->merge(
-                $this->content($response), ['channel_name' => $request->channel_name]
-            );
+            if ($response->status() === 200) {
+                $content = $this->merge(
+                    $this->content($response), ['channel_name' => $request->channel_name]
+                );
 
-            $response.setContent($this->encode($content));
+                $response->setContent($this->encode($content));
+            }
         });
     }
 
@@ -56,7 +58,7 @@ class EncodeBroadcastingAuthValidResponse
             return $channelName;
         } 
 
-        return array_merge($content, $channelName);
+        return array_merge((array) $content, $channelName);
     }
 
     /**
