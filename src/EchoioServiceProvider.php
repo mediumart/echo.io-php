@@ -2,9 +2,10 @@
 
 namespace Mediumart\Echoio;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Mediumart\Echoio\Broadcasting\Broadcasters\RedisBroadcaster;
-use Illuminate\Contracts\Broadcasting\Factory as BroadcastingFactory;
+use Illuminate\Broadcasting\BroadcastController;
+use Mediumart\Echoio\Http\Middleware\EncodeBroadcastingAuthValidResponse;
 
 class EchoioServiceProvider extends ServiceProvider
 {
@@ -15,13 +16,27 @@ class EchoioServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->make(BroadcastingFactory::class)->extend('redis', function ($app, $config) {
-            return new RedisBroadcaster(
-                $this->app->make('redis'), [
-                    'key' => $this->app['config']['services.broadcast.key'],
-                    'connection' =>  $config['connection'] ?  $config['connection'] : null
-                ]
-            );
+        $this->app->booted(function () {
+            $this->broadcastRoutesMiddleware($this->app['router']);
         });
+    }
+
+    /**
+     * Register a new broadcast routes middleware.
+     * 
+     * @param  Illuminate\Routing\Router $router      
+     */
+    protected function broadcastRoutesMiddleware(Router $router)
+    {
+        $aliasMiddlewareMethod = method_exists($router, 'middleware') ? 
+                                                    'middleware' : 'aliasMiddleware';
+
+        $router->{$aliasMiddlewareMethod}(
+            'io', EncodeBroadcastingAuthValidResponse::class
+        );
+
+        $router->getRoutes()
+                ->getByAction(BroadcastController::class.'@authenticate')
+                ->middleware('io');
     }
 }
