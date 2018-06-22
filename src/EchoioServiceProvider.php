@@ -33,8 +33,11 @@ class EchoioServiceProvider extends ServiceProvider
             'echo.io', EncodeBroadcastingAuthValidResponse::class
         );
 
-        $router->getRoutes()
-                ->getByAction(BroadcastController::class.'@authenticate')
-                ->middleware('echo.io');
+        $route = $router->getRoutes()
+                        ->getByAction(BroadcastController::class.'@authenticate');
+
+        if ($route) {
+            $route->middleware('echo.io');
+        }
     }
 }
