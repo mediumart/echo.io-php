@@ -5,3 +5,4 @@ src/Console/
 phpunit.xml
 clover.xml
 coveralls-upload.json
+composer.lock
